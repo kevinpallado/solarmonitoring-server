@@ -58,7 +58,7 @@ cron.schedule('*/10 * * * * *', () => {
             current_6: 100
         },
         json: true,
-        url: "http://localhost:3000/api/readings/event?event=readings&method=record_readings"
+        url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
     }
  
     // request(http_post_req, function (err, res, body) {
@@ -67,4 +67,4 @@ cron.schedule('*/10 * * * * *', () => {
     // })
 });
 
-server.listen(3000);
+server.listen(5000);
