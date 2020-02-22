@@ -38,11 +38,11 @@ function MainIndex(props) {
                     <GraphComponent />
                 </TabPane>
             </TabContent>
-            <Row style={{ marginTop: '1rem' }} className="border-top">
+            {/* <Row style={{ marginTop: '1rem' }} className="border-top">
                 <Col className="border" style={{ marginBottom: '2rem', marginTop: '1rem' }}>
                     <TableComponent />
                 </Col>
-            </Row>
+            </Row> */}
         </div>
     );
 }

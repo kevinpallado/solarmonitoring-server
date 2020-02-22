@@ -1,6 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { AiFillThunderbolt } from 'react-icons/ai';
 import { FaTemperatureHigh } from 'react-icons/fa';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket('ws://localhost:5000');
+
 import { Row, Col } from 'reactstrap';
 export default class Nodes extends Component {
     state = {
@@ -189,6 +193,16 @@ export default class Nodes extends Component {
             ]
         }
     };
+
+    componentWillMount() {
+        client.onopen = () => {
+            console.log('WebSocket Client Connected');
+        };
+        client.onmessage = (message) => {
+            console.log(message);
+        };
+    }
+    
     DataToggle = () => this.setState({
         dropdownOpen: !this.state.dropdownOpen
     });
