@@ -27,7 +27,7 @@ function add(event, data) {
 function view(event, data) {
     var dataResponse = [];
     return new Promise((resolve, reject) => {
-        console.log("EVENT => " + event);
+        console.log("EVENT => " + event);   
         switch(event) {
             case "all":
                 var sql_view = "SELECT * from readings"
