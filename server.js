@@ -1,5 +1,6 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
+    cors = require('cors'),
     http = require('http'),
     routes = require('./routes/routes'),
     path = require('path'),
@@ -8,8 +9,9 @@ const express = require('express'),
     app = express(),
     server = http.createServer(app),
     WebSocket = require('ws'),
-    s = new WebSocket.Server({ server: server, path: "/readings", noServer: true});
+    s = new WebSocket.Server({ server: server, path: "/readings", noServer: true });
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', routes);
@@ -30,15 +32,15 @@ s.on('connection', function (ws, req) {
     ws.on('message', function (message) {
         s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
             if (client != ws && client.readyState == 1) { //except to the same client (ws) that sent this message
-                    client.send(JSON.stringify(message));
-                }
+                client.send(JSON.stringify(message));
+            }
         });
     });
 
     ws.on('close', function () {
         console.log("lost one client");
     });
-    
+
     console.log("new client connected");
 });
 
@@ -47,10 +49,10 @@ cron.schedule('*/10 * * * * *', () => {
     var http_post_req = {
         method: 'post',
         body: {
-            temperatureC : 123,
-            temperatureF : 25.3,
-            voltage : 70,
-            current_1 : 255,
+            temperatureC: 123,
+            temperatureF: 25.3,
+            voltage: 70,
+            current_1: 255,
             current_2: 100,
             current_3: 100,
             current_4: 200,
@@ -60,7 +62,7 @@ cron.schedule('*/10 * * * * *', () => {
         json: true,
         url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
     }
- 
+
     // request(http_post_req, function (err, res, body) {
     //     if (err) throw err;
     //     console.log(res.statusCode);

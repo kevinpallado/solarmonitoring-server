@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FaTemperatureHigh } from 'react-icons/fa';
 import { Row, Col } from 'reactstrap';
 
 import { Line } from "react-chartjs-2";
