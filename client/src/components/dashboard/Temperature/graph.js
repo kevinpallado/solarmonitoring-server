@@ -3,8 +3,20 @@ import { Row, Col } from 'reactstrap';
 
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
+import Axios from 'axios';
 
 export default class TemperatureNode extends Component {
+
+  componentDidMount() {
+    Axios.get('localhost:5000/api/readings/data?event=read-temperature&method=all-temperature-data')
+    .then(res => {
+      console.log(res.data);
+      // this.setState({ items: res.data })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   state = {
     tempdataline: {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -28,10 +40,11 @@ export default class TemperatureNode extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: [80, 76, 80, 81, 56, 55, 40]
+          data: []
         }
       ]
-    }
+    },
+    items : []
   };
   render() {
     return (

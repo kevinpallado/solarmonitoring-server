@@ -19,13 +19,16 @@ Router.post("/readings/event", async (req, res) => {
 
 });
 
-Router.get("/testing/data", async (req, res) => {
-    try {
-        res.json({ voltage: 100, temperature: 50, c1: 123, c2: 234, c3: 345, c4: 456, c5: 678, c6: 789 })
+Router.get("/readings/data", async (req, res) => {
+    
+    var response;
+
+    switch (req.query.event) {
+        case "read-temperature":
+            response = await Readings.view(req.query.method,req.body);
+            break;
     }
-    catch (err) {
-        res.json({ message: err })
-    }
+    res.send(JSON.stringify(response));
 })
 
 module.exports = Router;

@@ -5,6 +5,46 @@ import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 
 class Graph extends Component {
+    ws = new WebSocket('ws://192.168.1.10:5000/readings')
+
+    // componentDidMount() {
+    //     this.ws.onopen = () => {
+    //     // on connecting, do nothing but log it to the console
+    //         console.log('connected')
+    //     }
+
+    //     this.ws.onmessage = evt => {
+    //         // listen to data sent from the websocket server
+    //         const message = JSON.parse(JSON.parse(evt.data))
+    //         console.log(this.state.voltagedataline.datasets[0].data.length);
+    //         if(this.state.voltagedataline.datasets[0].data.length == 10)
+    //         {
+    //             this.state.voltagedataline.datasets[0].data.pop();
+    //             this.state.voltagedataline.datasets[0].data.push(message.Voltage);
+    //         }
+    //         else
+    //         {
+    //             this.state.voltagedataline.datasets[0].data.push(message.Voltage);
+    //         }
+    //         console.log(this.state.voltagedataline.datasets[0].data);
+    //         // this.setState({
+    //         //     voltage: message.Voltage,
+    //         //     temperature: message.Temperature,
+    //         //     current1 : message.Current1,
+    //         //     current2 : message.Current2,
+    //         //     current3 : message.Current3,
+    //         //     current4 : message.Current4,
+    //         //     current5 : message.Current5,
+    //         //     current6 : message.Current6})
+    //     }
+
+    //     this.ws.onclose = () => {
+    //         console.log('disconnected')
+    //     // automatically try to reconnect on connection loss
+    //     }
+
+    // }
+    
     state = {
         voltagedataline: {
             dropdownOpen: false,
@@ -29,7 +69,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 }
             ]
         },
@@ -199,13 +239,13 @@ class Graph extends Component {
                     <Col style={{ marginTop: '.25rem' }}>
                         <MDBContainer>
                             <h5 className="mt-2">Voltage Graph</h5>
-                            <Line data={this.state.tempdataline} options={{ responsive: true }} />
+                            <Line data={this.state.voltagedataline} options={{ responsive: true }}  redraw={true} />
                         </MDBContainer>
                     </Col>
                     <Col style={{ marginTop: '.25rem' }}>
                         <MDBContainer>
                             <h5 className="mt-2">Temperature Graph</h5>
-                            <Line data={this.state.voltagedataline} options={{ responsive: true }} />
+                            <Line data={this.state.tempdataline} options={{ responsive: true }} />
                         </MDBContainer>
                     </Col>
                 </Row>
