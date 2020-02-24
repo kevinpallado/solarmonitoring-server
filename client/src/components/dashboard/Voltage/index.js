@@ -22,19 +22,6 @@ function MainIndex(props) {
     }
     return (
         <div>
-            <Row>
-                <Col style={{ marginBottom: '.25rem' }}>
-                    <div className="shadow-sm border  bg-white rounded" style={{ display: 'flex', padding: '.25rem' }}>
-                        <span className="p-3 bg-warning text-dark rounded" style={{ marginRight: '2rem', textAlign: 'center', height: '4rem', marginTop: '.25rem' }}>
-                            <AiFillThunderbolt size={32} />
-                        </span>
-                        <span className="d-inline-block">
-                            <p>Voltage Node</p>
-                            <p><b>0</b><b>V</b></p>
-                        </span>
-                    </div>
-                </Col>
-            </Row>
             <Nav tabs>
                 <NavItem><NavLink className={classNames({ active: activeTab === '1' })} onClick={() => { toggle('1') }}>
                     Graph

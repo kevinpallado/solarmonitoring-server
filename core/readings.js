@@ -4,9 +4,8 @@ function add(event, data) {
     return new Promise((resolve, reject) => {
         switch (event) {
             case "record_readings":
-                var sql_add = "INSERT INTO readings (temperatureC, temperatureF, voltage, current_1, current_2, current_3, current_4, current_5, current_6) VALUES ('" 
+                var sql_add = "INSERT INTO readings (temperatureC, voltage, current_1, current_2, current_3, current_4, current_5, current_6) VALUES ('" 
                             + data.temperatureC + "','" 
-                            + data.temperatureF + "','" 
                             + data.voltage + "','" 
                             + data.current_1 + "','" 
                             + data.current_2 + "','"
@@ -28,6 +27,7 @@ function add(event, data) {
 function view(event, data) {
     var dataResponse = [];
     return new Promise((resolve, reject) => {
+        console.log("EVENT => " + event);   
         switch(event) {
             case "all":
                 var sql_view = "SELECT * from readings"
@@ -51,6 +51,22 @@ function view(event, data) {
                     resolve(dataResponse);
                 });
             break;
+            case "all-temperature-data":
+                var sql_view = "SELECT id,temperatureC,dateRecorded FROM readings LIMIT 20"
+                db.query(sql_view, (err, rows, results) => {
+                    if(rows.length > 0)
+                    {
+                        for(var i = 0; i < rows.length; i++)
+                        {
+                            dataResponse.push({
+                                id: rows[i].id,
+                                tc: rows[i].temperatureC,
+                                daterecorded: rows[i].dateRecorded
+                            });
+                        }
+                        resolve(dataResponse);
+                    }
+                });
 
             default:
                 break;

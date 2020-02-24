@@ -3,13 +3,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('readings', {
-      _id: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
       temperatureC: Sequelize.FLOAT(),
-      temperatureF: Sequelize.FLOAT(),
       voltage: Sequelize.FLOAT(),
       current_1: Sequelize.FLOAT(),
       current_2: Sequelize.FLOAT(),
