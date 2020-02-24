@@ -6,7 +6,9 @@ import Axios from 'axios';
 
 export default class Nodes extends Component {
     state = {
-        items: []
+        itemz: {
+            items: []
+        }
     };
     DataToggle = () => this.setState({
         dropdownOpen: !this.state.dropdownOpen
@@ -15,7 +17,7 @@ export default class Nodes extends Component {
     componentDidMount() {
         Axios.get('http://localhost:5000/api/testing/data')
             .then(res => {
-                this.setState({ items: res.data })
+                this.setState({ itemz: { items: res.data } })
             })
             .catch(err => {
                 console.log(err)
@@ -23,7 +25,7 @@ export default class Nodes extends Component {
     }
 
     render() {
-        const { items } = this.state;
+        const { items } = this.state.itemz;
         return (
             <Fragment>
                 <Row xs="1" sm="2" md="3" lg="4">

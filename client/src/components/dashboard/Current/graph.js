@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
@@ -7,7 +7,7 @@ import { MDBContainer } from "mdbreact";
 export default class TemperatureNode extends Component {
   state = {
     currentdataline: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels: ["date1", "date2", "date3", "date4", "date5", "date6", "date7"],
       datasets: [
         {
           label: "Current Node 1",
@@ -28,7 +28,7 @@ export default class TemperatureNode extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: [80, 76, 80, 81, 56, 55, 40]
+          data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
           label: "Current Node 2",

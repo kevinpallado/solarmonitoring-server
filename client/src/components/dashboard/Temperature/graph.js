@@ -1,49 +1,82 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { defaults, Line } from 'react-chartjs-2';
 
-import { Line } from "react-chartjs-2";
-import { MDBContainer } from "mdbreact";
+defaults.global.animation = false;
 
-export default class TemperatureNode extends Component {
+class DoughnutExample extends Component {
   state = {
-    tempdataline: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "Temperature node 1",
-          fill: true,
-          lineTension: 0.3,
-          backgroundColor: "rgba(225, 204,230, .3)",
-          borderColor: "rgb(205, 130, 158)",
-          borderCapStyle: "butt",
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,1 58)",
-          pointBackgroundColor: "rgb(255, 255, 255)",
-          pointBorderWidth: 10,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgb(0, 0, 0)",
-          pointHoverBorderColor: "rgba(220, 220, 220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [80, 76, 80, 81, 56, 55, 40]
-        }
-      ]
+    data: {
+      labels: ["01/01/2020", "asddsa", "01/03/2020", "01/04/2020", "01/05/2020", "01/06/2020", "01/07/2020"],
+      datasets: [{
+        data: [0, 0, 0, 0, 0, 0, 0],
+        label: "Temperature node 1",
+        fill: true,
+        lineTension: 0.3,
+        backgroundColor: "rgba(225, 204,230, .3)",
+        borderColor: "rgb(205, 130, 158)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgb(205, 130,1 58)",
+        pointBackgroundColor: "rgb(255, 255, 255)",
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgb(0, 0, 0)",
+        pointHoverBorderColor: "rgba(220, 220, 220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+      }]
     }
-  };
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(
+      () => this.increment(),
+      1000
+    )
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
+  increment() {
+    const labelCopy = this.state.data.labels.slice(0);
+    labelCopy[0] = labelCopy[1];
+    labelCopy[1] = labelCopy[2];
+    labelCopy[2] = labelCopy[3];
+    labelCopy[3] = labelCopy[4];
+    labelCopy[4] = labelCopy[5];
+    labelCopy[5] = labelCopy[6];
+    labelCopy[6] = Date.now();
+    const datasetsCopy = this.state.data.datasets.slice(0);
+    const dataCopy = datasetsCopy[0].data.slice(0);
+    dataCopy[0] = dataCopy[1];
+    dataCopy[1] = dataCopy[2];
+    dataCopy[2] = dataCopy[3];
+    dataCopy[3] = dataCopy[4];
+    dataCopy[4] = dataCopy[5];
+    dataCopy[5] = dataCopy[6];
+    dataCopy[6] = Math.random();
+    datasetsCopy[0].data = dataCopy;
+
+    this.setState({
+      data: Object.assign({}, this.state.data, {
+        labels: labelCopy,
+        datasets: datasetsCopy
+      })
+    });
+  }
+
   render() {
     return (
       <div>
-        <Row className="mt-3 border-top">
-          <Col style={{ marginTop: '.25rem' }}>
-            <MDBContainer>
-              <Line data={this.state.tempdataline} options={{ responsive: true }} />
-            </MDBContainer>
-          </Col>
-        </Row>
+        <Line data={this.state.data} />
       </div>
     )
   }
 }
+
+export default DoughnutExample;
