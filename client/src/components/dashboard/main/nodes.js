@@ -47,32 +47,17 @@ export default class Nodes extends Component {
         dropdownOpen: !this.state.dropdownOpen
     });
 
-<<<<<<< HEAD
-    componentDidMount() {
-        Axios.get('http://localhost:5000/api/testing/data')
-            .then(res => {
-                this.setState({ itemz: { items: res.data } })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    render() {
-        const { items } = this.state.itemz;
-=======
     // componentDidMount() {
-        // Axios.get('http://localhost:5000/api/testing/data')
-        //     .then(res => {
-        //         this.setState({ items: res.data })
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
+    //     Axios.get('http://localhost:5000/api/testing/data')
+    //         .then(res => {
+    //             this.setState({ items: res.data })
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
     // }
 
     render() {
->>>>>>> 0d411722a458301f760e498b67ccd56887badc77
         return (
             <Fragment>
                 <Row xs="1" sm="2" md="3" lg="4">

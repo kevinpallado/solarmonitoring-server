@@ -235,13 +235,15 @@ class Graph extends Component {
     render() {
         return (
             <Fragment>
-                <Row className="mt-3" xs="1" sm="2">
+                <Row>
                     <Col style={{ marginTop: '.25rem' }}>
                         <MDBContainer>
                             <h5 className="mt-2">Voltage Graph</h5>
                             <Line data={this.state.voltagedataline} options={{ responsive: true }}  redraw={true} />
                         </MDBContainer>
                     </Col>
+                </Row>
+                <Row>
                     <Col style={{ marginTop: '.25rem' }}>
                         <MDBContainer>
                             <h5 className="mt-2">Temperature Graph</h5>

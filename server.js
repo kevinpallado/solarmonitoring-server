@@ -11,8 +11,9 @@ const express = require('express'),
     WebSocket = require('ws'),
     s = new WebSocket.Server({ server: server, path: "/readings", noServer: true, perMessageDeflate: false});
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(cors({
+//     origin: '*'
+// }));
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -20,6 +21,9 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.use('/api', routes);
 // app.use(express.static("public"));

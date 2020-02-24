@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { defaults, Line } from 'react-chartjs-2';
+import Axios from 'axios';
 
-<<<<<<< HEAD
 defaults.global.animation = false;
 
 class DoughnutExample extends Component {
@@ -33,6 +33,13 @@ class DoughnutExample extends Component {
   }
 
   componentDidMount() {
+    Axios.get('192.168.1.14:5000/api/readings/data?event=read-temperature&method=all-temperature-data', { headers: { "Access-Control-Allow-Origin": "*" } })
+      .then(res => {
+        console.log(res.data);
+        // this.setState({ items: res.data })
+      }).catch(err => {
+        console.log(err)
+      })
     this.timer = setInterval(
       () => this.increment(),
       1000
@@ -71,53 +78,6 @@ class DoughnutExample extends Component {
     });
   }
 
-=======
-import { Line } from "react-chartjs-2";
-import { MDBContainer } from "mdbreact";
-import Axios from 'axios';
-
-export default class TemperatureNode extends Component {
-
-  componentDidMount() {
-    Axios.get('localhost:5000/api/readings/data?event=read-temperature&method=all-temperature-data')
-    .then(res => {
-      console.log(res.data);
-      // this.setState({ items: res.data })
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  state = {
-    tempdataline: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "Temperature node 1",
-          fill: true,
-          lineTension: 0.3,
-          backgroundColor: "rgba(225, 204,230, .3)",
-          borderColor: "rgb(205, 130, 158)",
-          borderCapStyle: "butt",
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,1 58)",
-          pointBackgroundColor: "rgb(255, 255, 255)",
-          pointBorderWidth: 10,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgb(0, 0, 0)",
-          pointHoverBorderColor: "rgba(220, 220, 220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: []
-        }
-      ]
-    },
-    items : []
-  };
->>>>>>> 0d411722a458301f760e498b67ccd56887badc77
   render() {
     return (
       <div>
