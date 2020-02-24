@@ -4,17 +4,19 @@ function add(event, data) {
     return new Promise((resolve, reject) => {
         switch (event) {
             case "record_readings":
-                var sql_add = "INSERT INTO readings (temperatureC, voltage, current_1, current_2, current_3, current_4, current_5, current_6) VALUES ('" 
-                            + data.temperatureC + "','" 
-                            + data.voltage + "','" 
-                            + data.current_1 + "','" 
-                            + data.current_2 + "','"
-                            + data.current_3 + "','" 
-                            + data.current_4 + "','" 
-                            + data.current_5 + "','" 
-                            + data.current_6 + "')";
+                console.log("adding hehe")
+                var sql_add = "INSERT INTO readings (temperatureC, voltage, current_1, current_2, current_3, current_4, current_5, current_6) VALUES ('"
+                    + data.temperatureC + "','"
+                    + data.voltage + "','"
+                    + data.current_1 + "','"
+                    + data.current_2 + "','"
+                    + data.current_3 + "','"
+                    + data.current_4 + "','"
+                    + data.current_5 + "','"
+                    + data.current_6 + "')";
                 db.query(sql_add, (err, rows, results) => {
-                    if(err) throw err;
+                    if (err) throw err;
+                    console.log(results);
                     resolve(rows.affectedRows);
                 });
                 break;
@@ -27,13 +29,12 @@ function add(event, data) {
 function view(event, data) {
     var dataResponse = [];
     return new Promise((resolve, reject) => {
-        console.log("EVENT => " + event);   
-        switch(event) {
+        console.log("EVENT => " + event);
+        switch (event) {
             case "all":
                 var sql_view = "SELECT * from readings"
                 db.query("SELECT * from readings", (err, rows, results) => {
-                    for(var i = 0; i < rows.length; i++)
-                    {
+                    for (var i = 0; i < rows.length; i++) {
                         dataResponse.push({
                             id: rows[i]._id,
                             tc: rows[i].temperatureC,
@@ -50,14 +51,12 @@ function view(event, data) {
                     }
                     resolve(dataResponse);
                 });
-            break;
+                break;
             case "all-temperature-data":
                 var sql_view = "SELECT id,temperatureC,dateRecorded FROM readings LIMIT 20"
                 db.query(sql_view, (err, rows, results) => {
-                    if(rows.length > 0)
-                    {
-                        for(var i = 0; i < rows.length; i++)
-                        {
+                    if (rows.length > 0) {
+                        for (var i = 0; i < rows.length; i++) {
                             dataResponse.push({
                                 id: rows[i].id,
                                 tc: rows[i].temperatureC,

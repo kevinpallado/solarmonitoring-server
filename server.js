@@ -6,21 +6,21 @@ const express = require('express'),
     path = require('path'),
     cron = require('node-cron'),
     request = require('request'),
-    app = express(),
-    server = http.createServer(app),
-    WebSocket = require('ws'),
-    s = new WebSocket.Server({ server: server, path: "/readings", noServer: true, perMessageDeflate: false});
+    app = express();
+app.use(cors());
 
-// app.use(cors({
-//     origin: '*'
-// }));
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-xsrf-token, x_csrftoken');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+const server = http.createServer(app),
+    WebSocket = require('ws'),
+    s = new WebSocket.Server({ server: server, path: "/readings", noServer: true, perMessageDeflate: false });
+
+
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-xsrf-token, x_csrftoken');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -71,23 +71,23 @@ s.on('connection', function (ws, req) {
 
 cron.schedule('*/10 * * * * *', () => {
     console.log("Execute every 10 seconds");
-
-    if(readings.length > 0)
-    {
-        var http_post_req = {
-            method: 'post',
-            body: readings[0],
-            json: true,
-            url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
-        }
-        
-        request(http_post_req, function (err, res, body) {
-            if (err) throw err;
-            console.log(res.statusCode);
-            readings.length = 0;
-        })
+    var http_post_req = {
+        method: 'post',
+        body: {
+            temperatureC: 123,
+            temperatureF: 25.3,
+            voltage: 70,
+            current_1: 255,
+            current_2: 100,
+            current_3: 100,
+            current_4: 200,
+            current_5: 200,
+            current_6: 100
+        },
+        json: true,
+        url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
     }
-    
+
 });
 
 server.listen(5000);

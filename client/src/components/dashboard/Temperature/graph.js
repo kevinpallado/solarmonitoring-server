@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import { defaults, Line } from 'react-chartjs-2';
-import Axios from 'axios';
+import axios from 'axios';
 
 defaults.global.animation = false;
 
@@ -33,13 +34,6 @@ class DoughnutExample extends Component {
   }
 
   componentDidMount() {
-    Axios.get('192.168.1.14:5000/api/readings/data?event=read-temperature&method=all-temperature-data', { headers: { "Access-Control-Allow-Origin": "*" } })
-      .then(res => {
-        console.log(res.data);
-        // this.setState({ items: res.data })
-      }).catch(err => {
-        console.log(err)
-      })
     this.timer = setInterval(
       () => this.increment(),
       1000
@@ -51,6 +45,14 @@ class DoughnutExample extends Component {
   }
 
   increment() {
+    axios.get('http://localhost:5000/api/readings/data?event=read-temperature&method=all-temperature-data')
+      .then(res => {
+        console.log(res.data);
+        console.log("ni gana");
+        // this.setState({ items: res.data })
+      }).catch(err => {
+        console.log(err)
+      })
     const labelCopy = this.state.data.labels.slice(0);
     labelCopy[0] = labelCopy[1];
     labelCopy[1] = labelCopy[2];
@@ -82,6 +84,7 @@ class DoughnutExample extends Component {
     return (
       <div>
         <Line data={this.state.data} />
+        <Button>Hello</Button>
       </div>
     )
   }

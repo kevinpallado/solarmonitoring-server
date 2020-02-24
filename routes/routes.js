@@ -20,12 +20,12 @@ Router.post("/readings/event", async (req, res) => {
 });
 
 Router.get("/readings/data", async (req, res) => {
-    
+
     var response;
 
     switch (req.query.event) {
         case "read-temperature":
-            response = await Readings.view(req.query.method,req.body);
+            response = await Readings.view(req.query.method, req.body);
             break;
     }
     res.send(JSON.stringify(response));
