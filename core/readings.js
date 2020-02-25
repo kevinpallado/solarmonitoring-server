@@ -66,7 +66,44 @@ function view(event, data) {
                         resolve(dataResponse);
                     }
                 });
-
+                break;
+            
+            case "all-voltage-data":
+                var sql_view = "SELECT id,voltage,dateRecorded FROM readings LIMIT 20"
+                db.query(sql_view, (err, rows, results) => {
+                    if (rows.length > 0) {
+                        for (var i = 0; i < rows.length; i++) {
+                            dataResponse.push({
+                                id: rows[i].id,
+                                voltage: rows[i].voltage,
+                                daterecorded: rows[i].dateRecorded
+                            });
+                        }
+                        resolve(dataResponse);
+                    }
+                });
+                break;
+            
+            case "all-current-data":
+                var sql_view = "SELECT id,current_1,current_2,current_3,current_4,current_5,current_6,dateRecorded FROM readings LIMIT 20"
+                db.query(sql_view, (err, rows, results) => {
+                    if (rows.length > 0) {
+                        for (var i = 0; i < rows.length; i++) {
+                            dataResponse.push({
+                                id: rows[i].id,
+                                c1: rows[i].current_1,
+                                c2: rows[i].current_2,
+                                c3: rows[i].current_3,
+                                c4: rows[i].current_4,
+                                c5: rows[i].current_5,
+                                c6: rows[i].current_6,
+                                daterecorded: rows[i].dateRecorded
+                                });
+                            }
+                            resolve(dataResponse);
+                        }
+                    });
+                break;
             default:
                 break;
         }

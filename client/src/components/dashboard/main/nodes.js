@@ -6,7 +6,7 @@ import { Row, Col } from 'reactstrap';
 
 
 export default class Nodes extends Component {
-    ws = new WebSocket('ws://192.168.1.10:5000/readings')
+    ws = new WebSocket('ws://192.168.1.8:5000/readings')
 
 
     componentDidMount() {
@@ -18,15 +18,14 @@ export default class Nodes extends Component {
         this.ws.onmessage = evt => {
             // listen to data sent from the websocket server
             const message = JSON.parse(JSON.parse(evt.data))
-            console.log(message);
             this.setState({
                 voltage: message.Voltage,
-                temperature: message.Temperature,
-                current1 : message.Current1,
-                current2 : message.Current2,
-                current3 : message.Current3,
-                current4 : message.Current4,
-                current5 : message.Current5,
+                temperature: message.TemperatureC,
+                current1 : message.C1,
+                current2 : message.C2,
+                current3 : message.C3,
+                current4 : message.C4,
+                current5 : message.C5,
                 current6 : message.Current6})
         }
 
@@ -35,6 +34,9 @@ export default class Nodes extends Component {
         // automatically try to reconnect on connection loss
         }
 
+    }
+    componentWillUnmount() {
+        this.ws.onclose();   
     }
 
     state = {

@@ -46,13 +46,13 @@ s.on('connection', function (ws, req) {
         s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
             var data_read = JSON.parse(message);
             readings.push({
-                temperatureC: data_read.Temperature,
+                temperatureC: data_read.TemperatureC,
                 voltage: data_read.Voltage,
-                current_1: data_read.Current1,
-                current_2: data_read.Current2,
-                current_3: data_read.Current3,
-                current_4: data_read.Current4,
-                current_5: data_read.Current5,
+                current_1: data_read.C1,
+                current_2: data_read.C2,
+                current_3: data_read.C3,
+                current_4: data_read.C4,
+                current_5: data_read.C5,
                 current_6: data_read.Current6
             });
 

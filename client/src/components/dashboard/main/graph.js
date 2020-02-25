@@ -7,48 +7,10 @@ import { MDBContainer } from "mdbreact";
 class Graph extends Component {
     ws = new WebSocket('ws://192.168.1.10:5000/readings')
 
-    // componentDidMount() {
-    //     this.ws.onopen = () => {
-    //     // on connecting, do nothing but log it to the console
-    //         console.log('connected')
-    //     }
-
-    //     this.ws.onmessage = evt => {
-    //         // listen to data sent from the websocket server
-    //         const message = JSON.parse(JSON.parse(evt.data))
-    //         console.log(this.state.voltagedataline.datasets[0].data.length);
-    //         if(this.state.voltagedataline.datasets[0].data.length == 10)
-    //         {
-    //             this.state.voltagedataline.datasets[0].data.pop();
-    //             this.state.voltagedataline.datasets[0].data.push(message.Voltage);
-    //         }
-    //         else
-    //         {
-    //             this.state.voltagedataline.datasets[0].data.push(message.Voltage);
-    //         }
-    //         console.log(this.state.voltagedataline.datasets[0].data);
-    //         // this.setState({
-    //         //     voltage: message.Voltage,
-    //         //     temperature: message.Temperature,
-    //         //     current1 : message.Current1,
-    //         //     current2 : message.Current2,
-    //         //     current3 : message.Current3,
-    //         //     current4 : message.Current4,
-    //         //     current5 : message.Current5,
-    //         //     current6 : message.Current6})
-    //     }
-
-    //     this.ws.onclose = () => {
-    //         console.log('disconnected')
-    //     // automatically try to reconnect on connection loss
-    //     }
-
-    // }
-    
     state = {
         voltagedataline: {
             dropdownOpen: false,
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [],
             datasets: [
                 {
                     label: "Voltage node 1",
@@ -74,7 +36,7 @@ class Graph extends Component {
             ]
         },
         tempdataline: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [],
             datasets: [
                 {
                     label: "Temperature node 1",
@@ -95,12 +57,12 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 }
             ]
         },
         currentdataline: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [],
             datasets: [
                 {
                     label: "Current Node 1",
@@ -121,7 +83,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 },
                 {
                     label: "Current Node 2",
@@ -142,7 +104,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 },
                 {
                     label: "Current Node 3",
@@ -163,7 +125,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 },
                 {
                     label: "Current Node 4",
@@ -184,7 +146,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 },
                 {
                     label: "Current Node 5",
@@ -205,7 +167,7 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [80, 76, 80, 81, 56, 55, 40]
+                    data: []
                 },
                 {
                     label: "Current Node 6",
@@ -226,11 +188,73 @@ class Graph extends Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [28, 48, 40, 19, 86, 27, 90]
+                    data: []
                 }
             ]
         }
     };
+    componentDidMount() {
+        this.ws.onopen = () => {
+        // on connecting, do nothing but log it to the console
+            console.log('connected')
+        }
+
+        this.ws.onmessage = evt => {
+
+            const message = JSON.parse(JSON.parse(evt.data))
+            // this.setState({
+            //     voltage: message.Voltage,
+            //     temperature: message.Temperature,
+            //     current1 : message.Current1,
+            //     current2 : message.Current2,
+            //     current3 : message.Current3,
+            //     current4 : message.Current4,
+            //     current5 : message.Current5,
+            //     current6 : message.Current6})
+        }
+
+        this.ws.onclose = () => {
+            console.log('disconnected')
+        // automatically try to reconnect on connection loss
+        }
+
+    }
+
+    // componentDidMount() {
+        // this.timer = setInterval(
+        //   () => this.increment(),
+        //   1000
+        // )
+    //   }
+    
+    //   componentWillUnmount() {
+        // clearInterval(this.timer)
+    //   }
+    data_bind() {
+        const voltageLabel = this.state.voltagedataline.labels;
+        const temperatureLabel = this.state.tempdataline.labels;
+        const currentLabel = this.state.currentdataline.labels;
+
+        const voltageData = this.state.voltagedataline.datasets[0].data;
+        const temperatureData = this.state.tempdataline.datasets[0].data;
+
+        const currentData1 = this.state.currentdataline.datasets[0].data;
+        const currentData2 = this.state.currentdataline.datasets[1].data;
+        const currentData3 = this.state.currentdataline.datasets[2].data;
+        const currentData4 = this.state.currentdataline.datasets[3].data;
+        const currentData5 = this.state.currentdataline.datasets[4].data;
+        const currentData6 = this.state.currentdataline.datasets[5].data;
+
+        // if(voltageLabel.length == 6) voltageLabel.pop(); voltageLabel.push()
+
+        this.setState({
+            data: Object.assign({}, this.state.data, {
+                labels: labelCopy,
+                datasets: datasetsCopy
+            })
+        });
+  }
+    
 
     render() {
         return (

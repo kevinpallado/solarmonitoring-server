@@ -24,7 +24,7 @@ Router.get("/readings/data", async (req, res) => {
     var response;
 
     switch (req.query.event) {
-        case "read-temperature":
+        case "read":
             response = await Readings.view(req.query.method, req.body);
             break;
     }
