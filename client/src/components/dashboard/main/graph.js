@@ -231,28 +231,71 @@ class Graph extends Component {
         // clearInterval(this.timer)
     //   }
     data_bind() {
-        const voltageLabel = this.state.voltagedataline.labels;
-        const temperatureLabel = this.state.tempdataline.labels;
-        const currentLabel = this.state.currentdataline.labels;
+        var date_now = new Date();
 
-        const voltageData = this.state.voltagedataline.datasets[0].data;
-        const temperatureData = this.state.tempdataline.datasets[0].data;
+        const voltageLabel = this.state.voltagedataline.labels.slice(0);
+        const temperatureLabel = this.state.tempdataline.labels.slice(0);
+        const currentLabel = this.state.currentdataline.labels.slice(0);
 
-        const currentData1 = this.state.currentdataline.datasets[0].data;
-        const currentData2 = this.state.currentdataline.datasets[1].data;
-        const currentData3 = this.state.currentdataline.datasets[2].data;
-        const currentData4 = this.state.currentdataline.datasets[3].data;
-        const currentData5 = this.state.currentdataline.datasets[4].data;
-        const currentData6 = this.state.currentdataline.datasets[5].data;
+        const voltageData = this.state.voltagedataline.datasets[0].data.slice(0);
+        const temperatureData = this.state.tempdataline.datasets[0].data.slice(0);
 
-        // if(voltageLabel.length == 6) voltageLabel.pop(); voltageLabel.push()
+        const currentData1 = this.state.currentdataline.datasets[0].data.slice(0);
+        const currentData2 = this.state.currentdataline.datasets[1].data.slice(0);
+        const currentData3 = this.state.currentdataline.datasets[2].data.slice(0);
+        const currentData4 = this.state.currentdataline.datasets[3].data.slice(0);
+        const currentData5 = this.state.currentdataline.datasets[4].data.slice(0);
+        const currentData6 = this.state.currentdataline.datasets[5].data.slice(0);
+
+
+
+        voltageLabel.length == 6 ? voltageLabel.pop() : '';
+        temperatureLabel.length == 6 ? temperatureLabel.pop() : '';
+        currentLabel.length == 6 ? currentLabel.pop() : '';
+
+        voltageData.length == 6 ? voltageData.pop() : '';
+        temperatureData.length == 6 ? temperatureData.pop() : '';
+
+        currentData1.length == 6 ? currentData1.pop() : '';
+        currentData2.length == 6 ? currentData2.pop() : '';
+        currentData3.length == 6 ? currentData3.pop() : '';
+        currentData4.length == 6 ? currentData4.pop() : '';
+        currentData5.length == 6 ? currentData5.pop() : '';
+        currentData6.length == 6 ? currentData6.pop() : '';
+
+        voltageLabel.push(date_now);
+        temperatureLabel.push(date_now);
+        currentLabel.push(date_now);
+
+        voltageData.push(this.state.voltage);
+        temperatureData.push(this.state.temperature);
+        currentData1.push(this.state.current1);
+        currentData2.push(this.state.current2);
+        currentData3.push(this.state.current3);
+        currentData4.push(this.state.current4);
+        currentData5.push(this.state.current5);
+        currentData6.push(this.state.current6);
 
         this.setState({
-            data: Object.assign({}, this.state.data, {
-                labels: labelCopy,
-                datasets: datasetsCopy
+            data: Object.assign({}, this.state.voltagedataline, {
+                labels: voltageLabel,
+                datasets: voltageData
             })
         });
+
+        this.setState({
+            data: Object.assign({}, this.state.tempdataline, {
+                labels: temperatureLabel,
+                datasets: temperatureData
+            })
+        });
+
+        // this.setState({
+        //     data: Object.assign({}, this.state.currentdataline, {
+        //         labels: currentLabel,
+        //         datasets: temperatureData
+        //     })
+        // });
   }
     
 
