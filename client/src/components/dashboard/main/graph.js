@@ -195,7 +195,7 @@ class Graph extends Component {
     };
     componentDidMount() {
         this.ws.onopen = () => {
-        // on connecting, do nothing but log it to the console
+            // on connecting, do nothing but log it to the console
             console.log('connected')
         }
 
@@ -215,20 +215,20 @@ class Graph extends Component {
 
         this.ws.onclose = () => {
             console.log('disconnected')
-        // automatically try to reconnect on connection loss
+            // automatically try to reconnect on connection loss
         }
 
     }
 
     // componentDidMount() {
-        // this.timer = setInterval(
-        //   () => this.increment(),
-        //   1000
-        // )
+    // this.timer = setInterval(
+    //   () => this.increment(),
+    //   1000
+    // )
     //   }
-    
+
     //   componentWillUnmount() {
-        // clearInterval(this.timer)
+    // clearInterval(this.timer)
     //   }
     data_bind() {
         var date_now = new Date();
@@ -249,19 +249,19 @@ class Graph extends Component {
 
 
 
-        voltageLabel.length == 6 ? voltageLabel.pop() : '';
-        temperatureLabel.length == 6 ? temperatureLabel.pop() : '';
-        currentLabel.length == 6 ? currentLabel.pop() : '';
+        // voltageLabel.length == 6 ? voltageLabel.pop() : '';
+        // temperatureLabel.length == 6 ? temperatureLabel.pop() : '';
+        // currentLabel.length == 6 ? currentLabel.pop() : '';
 
-        voltageData.length == 6 ? voltageData.pop() : '';
-        temperatureData.length == 6 ? temperatureData.pop() : '';
+        // voltageData.length == 6 ? voltageData.pop() : '';
+        // temperatureData.length == 6 ? temperatureData.pop() : '';
 
-        currentData1.length == 6 ? currentData1.pop() : '';
-        currentData2.length == 6 ? currentData2.pop() : '';
-        currentData3.length == 6 ? currentData3.pop() : '';
-        currentData4.length == 6 ? currentData4.pop() : '';
-        currentData5.length == 6 ? currentData5.pop() : '';
-        currentData6.length == 6 ? currentData6.pop() : '';
+        // currentData1.length == 6 ? currentData1.pop() : '';
+        // currentData2.length == 6 ? currentData2.pop() : '';
+        // currentData3.length == 6 ? currentData3.pop() : '';
+        // currentData4.length == 6 ? currentData4.pop() : '';
+        // currentData5.length == 6 ? currentData5.pop() : '';
+        // currentData6.length == 6 ? currentData6.pop() : '';
 
         voltageLabel.push(date_now);
         temperatureLabel.push(date_now);
@@ -296,8 +296,8 @@ class Graph extends Component {
         //         datasets: temperatureData
         //     })
         // });
-  }
-    
+    }
+
 
     render() {
         return (
@@ -306,7 +306,7 @@ class Graph extends Component {
                     <Col style={{ marginTop: '.25rem' }}>
                         <MDBContainer>
                             <h5 className="mt-2">Voltage Graph</h5>
-                            <Line data={this.state.voltagedataline} options={{ responsive: true }}  redraw={true} />
+                            <Line data={this.state.voltagedataline} options={{ responsive: true }} redraw={true} />
                         </MDBContainer>
                     </Col>
                 </Row>

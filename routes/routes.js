@@ -31,4 +31,14 @@ Router.get("/readings/data", async (req, res) => {
     res.send(JSON.stringify(response));
 })
 
+Router.post("/testinsert", async (req, res) => {
+    const dataupdate = {
+        datefrom: req.body.date_from,
+        dateto: req.body.date_to,
+        timefrom: req.body.time_from,
+        timeto: req.body.time_to,
+    }
+    res.json(dataupdate);
+})
+
 module.exports = Router;
