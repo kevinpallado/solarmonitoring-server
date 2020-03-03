@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { FormGroup, Form, Row, Label, Input, Col } from 'reactstrap';
+import { FormGroup, Form, Row, Label, Input, Col, Button } from 'reactstrap';
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 import axios from 'axios';
@@ -29,7 +29,12 @@ export default class TemperatureNode extends Component {
           pointRadius: 1,
           pointHitRadius: 10,
         }]
-    }
+    },
+    datefrom: '',
+    dateto: '',
+    timefrom: '',
+    timeto: '',
+    dt_update: false
   };
 
   componentDidMount() {
@@ -58,6 +63,10 @@ export default class TemperatureNode extends Component {
         const datasetsCopy = this.state.data.datasets.slice(0);
         const labelCopy = this.state.data.labels.slice(0);
         const dataCopy = datasetsCopy[0].data.slice(0);
+
+        this.state.data.labels = [];
+        datasetsCopy[0].data = [];
+
         data.forEach(element => {
           var date = new Date(element.daterecorded);
           var hour = date.getHours();
@@ -84,38 +93,70 @@ export default class TemperatureNode extends Component {
     }
   }
 
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    var datefrom = this.state.datefrom + " " + this.state.timefrom;
+    var dateto = this.state.dateto + " " + this.state.timeto;
+
+    const data = {
+      dateTo: dateto,
+      dateFrom: datefrom
+    }
+    axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-voltage', data)
+      .then(res => this.data_bind('graph', res.data))
+      .catch(e => console.log(e));
+  }
+
   render() {
     return (
       <div>
         <Fragment>
-          <Form>
-              <Row xs="4" sm="4" md="4" lg="4">
-                <Col>
-                  <FormGroup>
-                    <Label for="exampleEmail">Date From</Label>
-                    <Input type="date" name="datefrom" id="datefrom"/>
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Label for="exampleEmail">Date To</Label>
-                    <Input type="date" name="dateto" id="dateto"/>
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Label for="exampleEmail">Time From</Label>
-                    <Input type="time" name="timefrom" id="timefrom"/>
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Label for="exampleEmail">Time To</Label>
-                    <Input type="time" name="timeto" id="timeto"/>
-                  </FormGroup>
-                </Col>
-              </Row>
+          <Form onSubmit={this.onSubmit}>
+            <Row xs="3" sm="3" md="5" lg="5">
+              <Col>
+                <FormGroup>
+                  <Label for="exampleEmail">Date From</Label>
+                  <Input type="date" name="datefrom" onChange={this.onChange} id="datefrom" />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label for="exampleEmail">Date To</Label>
+                  <Input type="date" name="dateto" onChange={this.onChange} id="dateto" />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label for="exampleEmail">Time From</Label>
+                  <Input type="time" name="timefrom" onChange={this.onChange} id="timefrom" />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label for="exampleEmail">Time To</Label>
+                  <Input type="time" name="timeto" onChange={this.onChange} id="timeto" />
+                </FormGroup>
+              </Col>
+              <Col>
+                <Row>
+                  <Label for="exampleEmail">&nbsp;</Label>
+                </Row>
+                <Row>
+                  <Button type="submit" color="dark">Update</Button>
+                </Row>
+              </Col>
+            </Row>
           </Form>
+
+          {/* Automatic update example (no need na update button: alternative)
+          {this.state.datefrom ? <Alert color="primary">{this.state.datefrom}</Alert> : null}
+          {this.state.dateto ? <Alert color="primary">{this.state.dateto}</Alert> : null}
+          {this.state.timefrom ? <Alert color="primary">{this.state.timefrom}</Alert> : null}
+          {this.state.timeto ? <Alert color="primary">{this.state.timeto}</Alert> : null} */}
         </Fragment>
         <Row className="mt-3 border-top">
           <Col style={{ marginTop: '.25rem' }}>

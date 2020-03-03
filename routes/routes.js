@@ -12,6 +12,9 @@ Router.post("/readings/event", async (req, res) => {
         case "list-readings":
             response = await Readings.view(req.query.method, req.body);
             break;
+        case "read-date":
+            response = await Readings.view(req.query.method, req.body);
+            break;
         default:
             break;
     }
@@ -26,6 +29,8 @@ Router.get("/readings/data", async (req, res) => {
     switch (req.query.event) {
         case "read":
             response = await Readings.view(req.query.method, req.body);
+            break;
+        default:
             break;
     }
     res.send(JSON.stringify(response));

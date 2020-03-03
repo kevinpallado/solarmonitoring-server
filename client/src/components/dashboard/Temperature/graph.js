@@ -67,9 +67,14 @@ class TemperatureGraph extends Component {
   data_bind(display, data) {
     switch (display) {
       case 'graph':
+
         const datasetsCopy = this.state.data.datasets.slice(0);
         const labelCopy = this.state.data.labels.slice(0);
         const dataCopy = datasetsCopy[0].data.slice(0);
+
+        this.state.data.labels = [];
+        datasetsCopy[0].data = [];
+
         data.forEach(element => {
           var date = new Date(element.daterecorded);
           var hour = date.getHours();
@@ -131,28 +136,20 @@ class TemperatureGraph extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value })
-
   }
 
   onSubmit = e => {
     e.preventDefault();
-    const oof_data = {
-      date_from: this.state.datefrom,
-      date_to: this.state.dateto,
-      time_from: this.state.timefrom,
-      time_to: this.state.timeto
+    var datefrom = this.state.datefrom + " " + this.state.timefrom;
+    var dateto = this.state.dateto + " " + this.state.timeto;
+
+    const data = {
+      dateTo: dateto,
+      dateFrom: datefrom
     }
-
-    axios.post('http://localhost:5000/api/testinsert', oof_data)
-      .then(res => console.log(res));
-
-
-    this.setState({
-      datefrom: '',
-      dateto: '',
-      timeto: '',
-      timefrom: ''
-    })
+    axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-temperature', data)
+      .then(res => this.data_bind('graph', res.data))
+      .catch(e => console.log(e));
   }
 
   render() {
@@ -196,11 +193,11 @@ class TemperatureGraph extends Component {
             </Row>
           </Form>
 
-          {/* Automatic update example (no need na update button: alternative) */}
+          {/* Automatic update example (no need na update button: alternative)
           {this.state.datefrom ? <Alert color="primary">{this.state.datefrom}</Alert> : null}
           {this.state.dateto ? <Alert color="primary">{this.state.dateto}</Alert> : null}
           {this.state.timefrom ? <Alert color="primary">{this.state.timefrom}</Alert> : null}
-          {this.state.timeto ? <Alert color="primary">{this.state.timeto}</Alert> : null}
+          {this.state.timeto ? <Alert color="primary">{this.state.timeto}</Alert> : null} */}
         </Fragment>
         <Line data={this.state.data} />
       </div>

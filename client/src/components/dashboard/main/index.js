@@ -11,7 +11,6 @@ import {
 
 import NodeComponent from './nodes';
 import GraphComponent from './graph';
-import TableComponent from './table';
 import classNames from 'classnames';
 
 function MainIndex(props) {
