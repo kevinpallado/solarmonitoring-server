@@ -40,14 +40,6 @@ class TemperatureGraph extends Component {
 
   componentDidMount() {
     this.data_query('f20_temperature');
-    // this.timer = setInterval(
-    //   () => this.increment(),
-    //   1000
-    // )
-  }
-
-  componentWillUnmount() {
-    // clearInterval(this.timer)
   }
 
   data_query(method) {
@@ -56,7 +48,6 @@ class TemperatureGraph extends Component {
         axios.get('http://localhost:5000/api/readings/data?event=read&method=all-temperature-data')
           .then(res => {
             this.data_bind('graph', res.data);
-            // this.setState({ items: res.data })
           }).catch(err => {
             console.log(err)
           })
@@ -98,48 +89,15 @@ class TemperatureGraph extends Component {
         });
     }
   }
-  // increment() {
-  // axios.get('http://localhost:5000/api/readings/data?event=read-temperature&method=all-temperature-data')
-  //   .then(res => {
-  //     console.log(res.data);
-  //     console.log("ni gana");
-  //     // this.setState({ items: res.data })
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // const labelCopy = this.state.data.labels.slice(0);
-  // labelCopy[0] = labelCopy[1];
-  // labelCopy[1] = labelCopy[2];
-  // labelCopy[2] = labelCopy[3];
-  // labelCopy[3] = labelCopy[4];
-  // labelCopy[4] = labelCopy[5];
-  // labelCopy[5] = labelCopy[6];
-  // labelCopy[6] = Date.now();
-  // const datasetsCopy = this.state.data.datasets.slice(0);
-  // const dataCopy = datasetsCopy[0].data.slice(0);
-  // dataCopy[0] = dataCopy[1];
-  // dataCopy[1] = dataCopy[2];
-  // dataCopy[2] = dataCopy[3];
-  // dataCopy[3] = dataCopy[4];
-  // dataCopy[4] = dataCopy[5];
-  // dataCopy[5] = dataCopy[6];
-  // dataCopy[6] = Math.random();
-  // datasetsCopy[0].data = dataCopy;
-
-  // this.setState({
-  //   data: Object.assign({}, this.state.data, {
-  //     labels: labelCopy,
-  //     datasets: datasetsCopy
-  //   })
-  // });
-  // }
 
   onChange = e => {
+    console.log(e)
     this.setState({ [e.target.name]: e.target.value })
   }
 
   onSubmit = e => {
     e.preventDefault();
+
     var datefrom = this.state.datefrom + " " + this.state.timefrom;
     var dateto = this.state.dateto + " " + this.state.timeto;
 
@@ -153,15 +111,18 @@ class TemperatureGraph extends Component {
   }
 
   render() {
+    // console.log(this.props.onDeck)
+    const item = this.props.showRows;
+    // console.log(item)
     return (
       <div>
         <Fragment>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={this.props.onSubmits}>
             <Row xs="3" sm="3" md="5" lg="5">
               <Col>
                 <FormGroup>
                   <Label for="exampleEmail">Date From</Label>
-                  <Input type="date" name="datefrom" onChange={this.onChange} id="datefrom" />
+                  <Input type="date" name="datefrom" onChange={this.props.onChange} id="datefrom" />
                 </FormGroup>
               </Col>
               <Col>
@@ -191,13 +152,10 @@ class TemperatureGraph extends Component {
                 </Row>
               </Col>
             </Row>
+            {item.map(({ id, tempc, date_recorded }) => (
+              <Alert color="primary">{id}, {tempc}, {date_recorded}</Alert>
+            ))}
           </Form>
-
-          {/* Automatic update example (no need na update button: alternative)
-          {this.state.datefrom ? <Alert color="primary">{this.state.datefrom}</Alert> : null}
-          {this.state.dateto ? <Alert color="primary">{this.state.dateto}</Alert> : null}
-          {this.state.timefrom ? <Alert color="primary">{this.state.timefrom}</Alert> : null}
-          {this.state.timeto ? <Alert color="primary">{this.state.timeto}</Alert> : null} */}
         </Fragment>
         <Line data={this.state.data} />
       </div>
