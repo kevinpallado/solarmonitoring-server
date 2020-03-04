@@ -6,68 +6,68 @@ import { Row, Col } from 'reactstrap';
 
 
 export default class Nodes extends Component {
-    ws = new WebSocket('ws://192.168.1.10:5000/readings')
-
-
-    componentDidMount() {
-        this.ws.onopen = () => {
-        // on connecting, do nothing but log it to the console
-            console.log('connected')
-        }
-
-        this.ws.onmessage = evt => {
-            // listen to data sent from the websocket server
-            const message = JSON.parse(JSON.parse(evt.data))
-            console.log(message);
-            // this.setState({
-            //     voltage: message.Voltage,
-            //     temperature: message.TemperatureC,
-            //     current1 : message.C1,
-            //     current2 : message.C2,
-            //     current3 : message.C3,
-            //     current4 : message.C4,
-            //     current5 : message.C5,
-            //     current6 : message.Current6})
-            this.setState({
-                voltage: message.Voltage,
-                temperature: message.Temperature,
-                current1 : message.Current1,
-                current2 : message.Current2,
-                current3 : message.Current3,
-                current4 : message.Current4,
-                current5 : message.Current5,
-                current6 : message.Current6})
-        }
-
-        this.ws.onclose = () => {
-            console.log('disconnected')
-        // automatically try to reconnect on connection loss
-        }
-
-    }
-    componentWillUnmount() {
-        this.ws.onclose();   
-    }
-
-    state = {
-        itemz: {
-            items: []
-        }
-    };
-    
-    DataToggle = () => this.setState({
-        dropdownOpen: !this.state.dropdownOpen
-    });
+    // ws = new WebSocket('ws://192.168.1.10:5000/readings')
+    // state = {
+    //     voltage: 1,
+    //     temperature: 2,
+    //     current1: 3,
+    //     current2: 4,
+    //     current3: 5,
+    //     current4: 6,
+    //     current5: 7,
+    //     current6: 8,
+    // }
 
     // componentDidMount() {
-    //     Axios.get('http://localhost:5000/api/testing/data')
-    //         .then(res => {
-    //             this.setState({ items: res.data })
+    //     this.ws.onopen = () => {
+    //         // on connecting, do nothing but log it to the console
+    //         console.log('connected')
+    //     }
+
+    //     this.ws.onmessage = evt => {
+    //         // listen to data sent from the websocket server
+    //         const message = JSON.parse(JSON.parse(evt.data))
+    //         console.log(message);
+    //         // this.setState({
+    //         //     voltage: message.Voltage,
+    //         //     temperature: message.TemperatureC,
+    //         //     current1 : message.C1,
+    //         //     current2 : message.C2,
+    //         //     current3 : message.C3,
+    //         //     current4 : message.C4,
+    //         //     current5 : message.C5,
+    //         //     current6 : message.Current6})
+    //         this.setState({
+    //             voltage: message.Voltage,
+    //             temperature: message.Temperature,
+    //             current1: message.Current1,
+    //             current2: message.Current2,
+    //             current3: message.Current3,
+    //             current4: message.Current4,
+    //             current5: message.Current5,
+    //             current6: message.Current6
     //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
+    //     }
+
+    //     this.ws.onclose = () => {
+    //         console.log('disconnected')
+    //         // automatically try to reconnect on connection loss
+    //     }
+
     // }
+    // componentWillUnmount() {
+    //     this.ws.onclose();
+    // }
+
+    // // componentDidMount() {
+    // //     Axios.get('http://localhost:5000/api/testing/data')
+    // //         .then(res => {
+    // //             this.setState({ items: res.data })
+    // //         })
+    // //         .catch(err => {
+    // //             console.log(err)
+    // //         })
+    // // }
 
     render() {
         return (
@@ -80,7 +80,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Voltage Node</p>
-                                <p><b>{this.state.voltage}</b><b>V</b></p>
+                                <p><b>{this.props.Vnode}</b><b>V</b></p>
                             </span>
                         </div>
                     </Col>
@@ -91,7 +91,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Temperature node</p>
-                                <p><b>{this.state.temperature}</b><b> C</b></p>
+                                <p><b>{this.props.Tnode}</b><b> C</b></p>
                             </span>
                         </div>
                     </Col>
@@ -102,7 +102,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 1</p>
-                                <p><b>{this.state.current1}</b><b>A</b></p>
+                                <p><b>{this.props.C1node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
@@ -113,7 +113,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 2</p>
-                                <p><b>{this.state.current2}</b><b>A</b></p>
+                                <p><b>{this.props.C2node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
@@ -124,7 +124,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 3</p>
-                                <p><b>{this.state.current3}</b><b>A</b></p>
+                                <p><b>{this.props.C3node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
@@ -135,7 +135,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 4</p>
-                                <p><b>{this.state.current4}</b><b>A</b></p>
+                                <p><b>{this.props.C4node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
@@ -146,7 +146,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 5</p>
-                                <p><b>{this.state.current5}</b><b>A</b></p>
+                                <p><b>{this.props.C5node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
@@ -157,7 +157,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Current Node 6</p>
-                                <p><b>{this.state.current6}</b><b>A</b></p>
+                                <p><b>{this.props.C6node}</b><b>A</b></p>
                             </span>
                         </div>
                     </Col>
