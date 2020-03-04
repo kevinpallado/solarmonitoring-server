@@ -84,8 +84,8 @@ class MainIndex extends Component {
             case 'f20_temperature':
                 axios.get('http://localhost:5000/api/readings/data?event=read&method=all-temperature-data')
                     .then(res => {
-                        this.data_bind('graph', res.data)
-                        this.data_bind('table', res.data)
+                        this.data_bind('graph', res.data, false)
+                        this.data_bind('table', res.data, false)
                     }).catch(err => {
                         console.log(err)
                     })
@@ -105,18 +105,18 @@ class MainIndex extends Component {
     // END TAB
 
     //GRAPH BIND
-    data_bind(display, datas) {
+    data_bind(display, datas, command) {
         switch (display) {
             case 'graph':
-                // console.log(datas)
                 const datasetsCopy = this.state.data.datasets.slice(0);
+                if(command)
+                {
+                    this.state.data.labels = [];
+                    datasetsCopy[0].data = [];
+                }
                 const labelCopy = this.state.data.labels.slice(0);
                 const dataCopy = datasetsCopy[0].data.slice(0);
-
-                this.state.data.labels = [];
-                datasetsCopy[0].data = [];
-                // console.log(datasetsCopy[0].data)
-
+                
                 datas.forEach(element => {
                     var date = new Date(element.daterecorded);
                     var hour = date.getHours();
@@ -179,8 +179,8 @@ class MainIndex extends Component {
         }
         axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-temperature', data)
             .then(res => {
-                this.data_bind('graph', res.data)
-                this.data_bind('table', res.data)
+                this.data_bind('graph', res.data, true)
+                this.data_bind('table', res.data, true)
             })
             .catch(e => console.log(e));
     }

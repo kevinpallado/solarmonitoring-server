@@ -45,14 +45,24 @@ s.on('connection', function (ws, req) {
     ws.on('message', function (message) {
         s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
             var data_read = JSON.parse(message);
+            // readings.push({
+            //     temperatureC: data_read.TemperatureC,
+            //     voltage: data_read.Voltage,
+            //     current_1: data_read.C1,
+            //     current_2: data_read.C2,
+            //     current_3: data_read.C3,
+            //     current_4: data_read.C4,
+            //     current_5: data_read.C5,
+            //     current_6: data_read.Current6
+            // });
             readings.push({
-                temperatureC: data_read.TemperatureC,
+                temperatureC: data_read.Temperature,
                 voltage: data_read.Voltage,
-                current_1: data_read.C1,
-                current_2: data_read.C2,
-                current_3: data_read.C3,
-                current_4: data_read.C4,
-                current_5: data_read.C5,
+                current_1: data_read.Current1,
+                current_2: data_read.Current2,
+                current_3: data_read.Current3,
+                current_4: data_read.Current4,
+                current_5: data_read.Current5,
                 current_6: data_read.Current6
             });
 
@@ -71,23 +81,21 @@ s.on('connection', function (ws, req) {
 
 cron.schedule('*/10 * * * * *', () => {
     console.log("Execute every 10 seconds");
-    var http_post_req = {
-        method: 'post',
-        body: {
-            temperatureC: 123,
-            temperatureF: 25.3,
-            voltage: 70,
-            current_1: 255,
-            current_2: 100,
-            current_3: 100,
-            current_4: 200,
-            current_5: 200,
-            current_6: 100
-        },
-        json: true,
-        url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
+    if(readings.length > 0)
+    {
+        var http_post_req = {
+            method: 'post',
+            body: readings[0],
+            json: true,
+            url: "http://localhost:5000/api/readings/event?event=readings&method=record_readings"
+        }
+        
+        request(http_post_req, function (err, res, body) {
+            if (err) throw err;
+            console.log(res.statusCode);
+            readings.length = 0;
+        })
     }
-
 });
 
 server.listen(5000);

@@ -221,8 +221,8 @@ class MainIndex extends Component {
             case 'f20':
                 axios.get('http://localhost:5000/api/readings/data?event=read&method=all-current-data')
                     .then(res => {
-                        this.data_bind('graph', res.data)
-                        this.data_bind('table', res.data)
+                        this.data_bind('graph', res.data, false)
+                        this.data_bind('table', res.data, false)
                     }).catch(err => {
                         console.log(err)
                     })
@@ -242,11 +242,20 @@ class MainIndex extends Component {
     // END TAB
 
     //GRAPH BIND
-    data_bind(display, datas) {
-        console.log("Voltage data => " + JSON.stringify(datas));
+    data_bind(display, datas, command) {
         switch (display) {
             case 'graph':
                 const datasetsCopy = this.state.data.datasets.slice(0);
+                if(command)
+                {
+                    this.state.data.labels = [];
+                    datasetsCopy[0].data = [];
+                    datasetsCopy[1].data = [];
+                    datasetsCopy[2].data = [];
+                    datasetsCopy[3].data = [];
+                    datasetsCopy[4].data = [];
+                    datasetsCopy[5].data = [];
+                }
                 const labelCopy = this.state.data.labels.slice(0);
                 const dataCopy = datasetsCopy[0].data.slice(0);
                 const dataCopy1 = datasetsCopy[1].data.slice(0);
@@ -326,8 +335,8 @@ class MainIndex extends Component {
         }
         axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-current', data)
             .then(res => {
-                this.data_bind('graph', res.data)
-                this.data_bind('table', res.data)
+                this.data_bind('graph', res.data, true)
+                this.data_bind('table', res.data, true)
             })
             .catch(e => console.log(e));
     }
