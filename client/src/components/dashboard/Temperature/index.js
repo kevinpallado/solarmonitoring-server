@@ -108,14 +108,14 @@ class MainIndex extends Component {
     data_bind(display, datas) {
         switch (display) {
             case 'graph':
-                console.log(datas)
+                // console.log(datas)
                 const datasetsCopy = this.state.data.datasets.slice(0);
                 const labelCopy = this.state.data.labels.slice(0);
                 const dataCopy = datasetsCopy[0].data.slice(0);
 
                 this.state.data.labels = [];
                 datasetsCopy[0].data = [];
-                console.log(datasetsCopy[0].data)
+                // console.log(datasetsCopy[0].data)
 
                 datas.forEach(element => {
                     var date = new Date(element.daterecorded);
@@ -132,7 +132,7 @@ class MainIndex extends Component {
                 });
 
                 datasetsCopy[0].data = dataCopy
-                console.log(labelCopy, datasetsCopy)
+                // console.log(labelCopy, datasetsCopy)
 
                 this.setState({
                     data: {
