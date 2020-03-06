@@ -14,7 +14,7 @@ import GraphComponent from './graph';
 import classNames from 'classnames';
 
 class MainIndex extends Component {
-    ws = new WebSocket('ws://192.168.1.10:5000/readings')
+    ws = new WebSocket('ws://192.168.1.26:5000/readings')
 
     state = {
         voltage: '',
@@ -52,9 +52,9 @@ class MainIndex extends Component {
                 }
             ]
         },
-        tempdataline: {
-            labels: [],
-            datasets: [
+    tempdataline: {
+        labels: [],
+        datasets: [
                 {
                     label: "Temperature node 1",
                     fill: true,
@@ -220,25 +220,27 @@ class MainIndex extends Component {
         this.ws.onmessage = evt => {
 
             const message = JSON.parse(JSON.parse(evt.data))
+            this.setState({
+                voltage: message.Voltage,
+                temperature: message.TemperatureC,
+                current1 : message.C1,
+                current2 : message.C2,
+                current3 : message.C3,
+                current4 : message.C4,
+                current5 : message.C5,
+                current6 : message.Current6})
             // this.setState({
             //     voltage: message.Voltage,
             //     temperature: message.Temperature,
-            //     current1 : message.Current1,
-            //     current2 : message.Current2,
-            //     current3 : message.Current3,
-            //     current4 : message.Current4,
-            //     current5 : message.Current5,
-            //     current6 : message.Current6})
-            this.setState({
-                voltage: message.Voltage,
-                temperature: message.Temperature,
-                current1: message.Current1,
-                current2: message.Current2,
-                current3: message.Current3,
-                current4: message.Current4,
-                current5: message.Current5,
-                current6: message.Current6
-            })
+            //     current1: message.Current1,
+            //     current2: message.Current2,
+            //     current3: message.Current3,
+            //     current4: message.Current4,
+            //     current5: message.Current5,
+            //     current6: message.Current6
+            // })
+
+            this.data_bind()
         }
 
         this.ws.onclose = () => {
@@ -263,20 +265,76 @@ class MainIndex extends Component {
     // clearInterval(this.timer)
     //   }
     data_bind() {
-        var date_now = new Date();
+        var date_now = Date.now();
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+        date_now = new Date(date_now);
+        var hour = date_now.getHours();
+        date_now = monthNames[date_now.getMonth()] + "-" + date_now.getDate() + " " + (hour > 11 ? hour - 12 : hour) + ":" + date_now.getMinutes() + ":" + date_now.getSeconds() + (date_now.getHours() > 11 ? " AM" : " PM")
+        const voltageLabel = this.state.voltagedataline.labels.slice(0);
+        const temperatureLabel = this.state.tempdataline.labels.slice(0);
+        const currentLabel = this.state.currentdataline.labels.slice(0);
 
-        // const voltageLabel = this.state.voltagedataline.labels.slice(0);
-        // const temperatureLabel = this.state.tempdataline.labels.slice(0);
-        // const currentLabel = this.state.currentdataline.labels.slice(0);
+        const voltageDatasets = this.state.voltagedataline.datasets.slice(0);
+        const currentDatasets = this.state.currentdataline.datasets.slice(0);
+        const tempDatasets = this.state.tempdataline.datasets.slice(0);
 
-        // const voltageDatasets = this.state.voltagedataline.datasets.slice(0);
-        // const currentDatasets = this.state.voltagedataline.datasets.slice(0);
-        // const tempDatasets = this.state.voltagedataline.datasets.slice(0);
+        const voltageDataCopy = voltageDatasets[0].data.slice(0);
+        const tempDataCopy = tempDatasets[0].data.slice(0);
 
-        // // const voltageData = this.state.voltagedataline.datasets[0].data.slice(0);
-        // const voltageDataCopy = voltageDatasets[0].data.slice(0);
-        // const tempDataCopy = tempDatasets[0].data.slice(0);
+        const currentDataCopy1 = currentDatasets[0].data.slice(0);
+        const currentDataCopy2 = currentDatasets[1].data.slice(0);
+        const currentDataCopy3 = currentDatasets[2].data.slice(0);
+        const currentDataCopy4 = currentDatasets[3].data.slice(0);
+        const currentDataCopy5 = currentDatasets[4].data.slice(0);
+        const currentDataCopy6 = currentDatasets[5].data.slice(0);
 
+        if(voltageLabel.length == 6)
+        {
+            voltageLabel.pop()
+            temperatureLabel.pop()
+            currentLabel.pop()
+
+            voltageDataCopy.pop()
+            tempDataCopy.pop()
+
+            currentDataCopy1.pop();
+            currentDataCopy2.pop();
+            currentDataCopy3.pop();
+            currentDataCopy4.pop();
+            currentDataCopy5.pop();
+            currentDataCopy6.pop();
+
+            voltageLabel.push(date_now)
+            temperatureLabel.push(date_now)
+            currentLabel.push(date_now)
+
+            voltageDataCopy.push(this.state.voltage)
+            tempDataCopy.push(this.state.temperature)
+
+            currentDataCopy1.push(this.state.current1);
+            currentDataCopy2.push(this.state.current2);
+            currentDataCopy3.push(this.state.current3);
+            currentDataCopy4.push(this.state.current4);
+            currentDataCopy5.push(this.state.current5);
+            currentDataCopy6.push(this.state.current6);   
+        }
+        else
+        {
+            voltageLabel.push(date_now)
+            temperatureLabel.push(date_now)
+            currentLabel.push(date_now)
+
+            voltageDataCopy.push(this.state.voltage)
+            tempDataCopy.push(this.state.temperature)
+
+            currentDataCopy1.push(this.state.current1);
+            currentDataCopy2.push(this.state.current2);
+            currentDataCopy3.push(this.state.current3);
+            currentDataCopy4.push(this.state.current4);
+            currentDataCopy5.push(this.state.current5);
+            currentDataCopy6.push(this.state.current6); 
+        }
         // voltageLabel.length == 6 ? voltageLabel.pop() : '';
         // temperatureLabel.length == 6 ? temperatureLabel.pop() : '';
         // currentLabel.length == 6 ? currentLabel.pop() : '';
@@ -289,6 +347,16 @@ class MainIndex extends Component {
         // {
         //     currentDataCopy[x] = currentDatasets[x].data.slice(0);
         // }
+
+        voltageDatasets[0].data = voltageDataCopy
+        tempDatasets[0].data = tempDataCopy;
+
+        currentDatasets[0].data = currentDataCopy1;
+        currentDatasets[1].data = currentDataCopy2;
+        currentDatasets[2].data = currentDataCopy3;
+        currentDatasets[3].data = currentDataCopy4;
+        currentDatasets[4].data = currentDataCopy5;
+        currentDatasets[5].data = currentDataCopy6;
         // const currentDataCopy2 = currentDatasets[1].data.slice(0);
         // const currentDataCopy3 = currentDatasets[2].data.slice(0);
         // const currentDataCopy4 = currentDatasets[3].data.slice(0);
@@ -315,20 +383,26 @@ class MainIndex extends Component {
         // currentData5.push(this.state.current5);
         // currentData6.push(this.state.current6);
 
-        // this.setState({
-        //     data: Object.assign({}, this.state.voltagedataline, {
-        //         labels: voltageLabel,
-        //         datasets: voltageData
-        //     })
-        // });
+        this.setState({
+            voltagedataline: {
+                labels: voltageLabel,
+                datasets: voltageDatasets
+            }
+        });
 
-        // this.setState({
-        //     data: Object.assign({}, this.state.tempdataline, {
-        //         labels: temperatureLabel,
-        //         datasets: temperatureData
-        //     })
-        // });
+        this.setState({
+            tempdataline: {
+                labels: temperatureLabel,
+                datasets: tempDatasets
+            }
+        });
 
+        this.setState({
+            currentdataline: {
+                labels: currentLabel,
+                datasets: currentDatasets
+            }
+        });
         // this.setState({
         //     data: Object.assign({}, this.state.currentdataline, {
         //         labels: currentLabel,
