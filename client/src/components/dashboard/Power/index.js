@@ -266,7 +266,7 @@ class MainIndex extends Component {
                 const dataCopy4 = datasetsCopy[4].data.slice(0);
                 const dataCopy5 = datasetsCopy[5].data.slice(0);
                 datas.forEach(element => {
-                var date = new Date(element.createdAt);
+                var date = new Date(element.daterecorded);
                 var hour = date.getHours();
                 var time;
                 if(date.getHours() > 12 && date.getHours() === 0)
@@ -303,7 +303,7 @@ class MainIndex extends Component {
             case 'table':
                 this.setState({ rows: [] })
                 datas.forEach(element => {
-                    var date = new Date(element.createdAt);
+                    var date = new Date(element.daterecorded);
                     var hour = date.getHours();
                     var time;
                     if (date.getHours() > 12 && date.getHours() === 0) {
