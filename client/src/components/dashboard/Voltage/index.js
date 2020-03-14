@@ -90,6 +90,8 @@ class MainIndex extends Component {
                         console.log(err)
                     })
                 break;
+            default:
+                return null;
         }
     }
     //BIND DATA END
@@ -117,16 +119,16 @@ class MainIndex extends Component {
                 }
                 const labelCopy = this.state.data.labels.slice(0);
                 const dataCopy = datasetsCopy[0].data.slice(0);
-
+                var time;
                 datas.forEach(element => {
-                    var date = new Date(element.daterecorded);
+                    var date = new Date(element.createdAt);
                     var hour = date.getHours();
                     if (date.getHours() > 12 && date.getHours() === 0) {
-                        var time = hour - 12 + ":" + date.getMinutes() + ":" + date.getSeconds() + " pm";
+                        time = hour - 12 + ":" + date.getMinutes() + ":" + date.getSeconds() + " pm";
                         labelCopy.push(time);
                     }
                     else {
-                        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
+                        time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
                         labelCopy.push(time);
                     }
                     dataCopy.push(Math.round(element.voltage));
@@ -144,13 +146,14 @@ class MainIndex extends Component {
             case 'table':
                 this.setState({ rows: [] })
                 datas.forEach(element => {
-                    var date = new Date(element.daterecorded);
+                    var date = new Date(element.createdAt);
                     var hour = date.getHours();
+                    var time;
                     if (date.getHours() > 12 && date.getHours() === 0) {
-                        var time = hour - 12 + ":" + date.getMinutes() + ":" + date.getSeconds() + " pm";
+                        time = hour - 12 + ":" + date.getMinutes() + ":" + date.getSeconds() + " pm";
                     }
                     else {
-                        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
+                        time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
                     }
                     this.setState(state => ({
                         rows: [...state.rows, { id: element.id, voltage: element.voltage, date_recorded: time }]

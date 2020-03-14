@@ -4,6 +4,7 @@ import NodeContent from '../components/dashboard/main/index';
 import VoltageContent from '../components/dashboard/Voltage/index';
 import TemperatureContent from '../components/dashboard/Temperature/index';
 import CurrentContent from '../components/dashboard/Current/index';
+import PowerContent from '../components/dashboard/Power/index';
 import { Container } from 'reactstrap';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ export default class HomeRoute extends Component {
                         <Route path="/Voltage" component={VoltageContent} />
                         <Route path="/Temperature" component={TemperatureContent} />
                         <Route path="/Current" component={CurrentContent} />
+                        <Route path="/Power" component={PowerContent} />
                     </Container>
                 </div>
             </Router>

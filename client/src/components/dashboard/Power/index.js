@@ -30,38 +30,38 @@ class MainIndex extends Component {
                 width: 150
             },
             {
-                label: 'Current 1',
-                field: 'c1',
+                label: 'Power Line 1',
+                field: 'p1',
                 sort: 'asc',
                 width: 250
             },
             {
-                label: 'Current 2',
-                field: 'c2',
+                label: 'Power Line 2',
+                field: 'p2',
                 sort: 'asc',
                 width: 250
             },
             {
-                label: 'Current 3',
-                field: 'c3',
+                label: 'Power Line 3',
+                field: 'p3',
                 sort: 'asc',
                 width: 250
             },
             {
-                label: 'Current 4',
-                field: 'c4',
+                label: 'Power Line 4',
+                field: 'p4',
                 sort: 'asc',
                 width: 250
             },
             {
-                label: 'Current 5',
-                field: 'c5',
+                label: 'Power Line 5',
+                field: 'p5',
                 sort: 'asc',
                 width: 250
             },
             {
-                label: 'Current 6',
-                field: 'c6',
+                label: 'Power Line 6',
+                field: 'p6',
                 sort: 'asc',
                 width: 250
             },
@@ -78,7 +78,7 @@ class MainIndex extends Component {
             datasets: [
               {
                 data: [],
-                label: "Current Node 1",
+                label: "Power Line 1",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(225, 244,230, .3)",
@@ -99,7 +99,7 @@ class MainIndex extends Component {
               },
               {
                 data: [],
-                label: "Current Node 2",
+                label: "Power Line 2",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(225, 204,230, .3)",
@@ -120,7 +120,7 @@ class MainIndex extends Component {
               },
               {
                 data: [],
-                label: "Current Node 3",
+                label: "Power Line 3",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(225, 204,230, .3)",
@@ -141,7 +141,7 @@ class MainIndex extends Component {
               },
               {
                 data: [],
-                label: "Current Node 4",
+                label: "Power Line 4",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(225, 204,230, .3)",
@@ -162,7 +162,7 @@ class MainIndex extends Component {
               },
               {
                 data: [],
-                label: "Current Node 5",
+                label: "Power Line 5",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(225, 204,230, .3)",
@@ -183,7 +183,7 @@ class MainIndex extends Component {
               },
               {
                 data: [],
-                label: "Current Node 6",
+                label: "Power Line 6",
                 fill: true,
                 lineTension: 0.3,
                 backgroundColor: "rgba(184, 185, 210, .3)",
@@ -219,7 +219,7 @@ class MainIndex extends Component {
     data_query(method) {
         switch (method) {
             case 'f20':
-                axios.get('http://localhost:5000/api/readings/data?event=read&method=all-current-data')
+                axios.get('http://localhost:5000/api/readings/data?event=read&method=all-power-data')
                     .then(res => {
                         this.data_bind('graph', res.data, false)
                         this.data_bind('table', res.data, false)
@@ -279,12 +279,12 @@ class MainIndex extends Component {
                     time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
                     labelCopy.push(time);
                 }
-                dataCopy.push(Math.round(element.c1));
-                dataCopy1.push(Math.round(element.c2));
-                dataCopy2.push(Math.round(element.c3));
-                dataCopy3.push(Math.round(element.c4));
-                dataCopy4.push(Math.round(element.c5));
-                dataCopy5.push(Math.round(element.c6));
+                dataCopy.push(Math.round(element.p1));
+                dataCopy1.push(Math.round(element.p2));
+                dataCopy2.push(Math.round(element.p3));
+                dataCopy3.push(Math.round(element.p4));
+                dataCopy4.push(Math.round(element.p5));
+                dataCopy5.push(Math.round(element.p6));
                 });
                 datasetsCopy[0].data = dataCopy
                 datasetsCopy[1].data = dataCopy1
@@ -313,12 +313,12 @@ class MainIndex extends Component {
                         time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " am";
                     }
                     this.setState(state => ({
-                        rows: [...state.rows, { id: element.id, c1: element.c1, c2: element.c2, c3: element.c3, c4: element.c4, c5: element.c5, c6: element.c6, date_recorded: time }]
+                        rows: [...state.rows, { id: element.id, p1: element.p1, p2: element.p2, p3: element.p3, p4: element.p4, p5: element.p5, p6: element.p6, date_recorded: time }]
                     }))
                 });
                 break;
             default:
-                return null;
+                break;
         }
     }
     //GRAPH BIND END
@@ -337,7 +337,7 @@ class MainIndex extends Component {
             dateTo: dateto,
             dateFrom: datefrom
         }
-        axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-current', data)
+        axios.post('http://localhost:5000/api/readings/event?event=read-date&method=between-dates-power', data)
             .then(res => {
                 this.data_bind('graph', res.data, true)
                 this.data_bind('table', res.data, true)

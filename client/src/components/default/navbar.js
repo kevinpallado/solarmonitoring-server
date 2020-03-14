@@ -33,6 +33,9 @@ const SMNavBar = (props) => {
           <NavItem>
             <NavLink to="/Current" className="nav-link text-white">Current</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink to="/Power" className="nav-link text-white">Power</NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
     </Navbar>
