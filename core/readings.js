@@ -14,12 +14,12 @@ function add(event, data) {
                     + data.current_4 + "','"
                     + data.current_5 + "','"
                     + data.current_6 + "','"
-                    + data.power_1 + "','"
-                    + data.power_2 + "','"
-                    + data.power_3 + "','"
-                    + data.power_4 + "','"
-                    + data.power_5 + "','"
-                    + data.power_6 + "')";
+                    + data.power1 + "','"
+                    + data.power2 + "','"
+                    + data.power3 + "','"
+                    + data.power4 + "','"
+                    + data.power5 + "','"
+                    + data.power6 + "')";
                 db.query(sql_add, (err, rows, results) => {
                     if (err) throw err;
                     console.log(results);
