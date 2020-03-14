@@ -5,7 +5,7 @@ function add(event, data) {
         switch (event) {
             case "record_readings":
                 console.log("adding hehe")
-                var sql_add = "INSERT INTO readings (temperatureC, voltage, current_1, current_2, current_3, current_4, current_5, current_6) VALUES ('"
+                var sql_add = "INSERT INTO readings (temperatureC, voltage, current_1, current_2, current_3, current_4, current_5, current_6,power_1,power_2,power_3,power_4,power_5,power_6) VALUES ('"
                     + data.temperatureC + "','"
                     + data.voltage + "','"
                     + data.current_1 + "','"
@@ -14,12 +14,12 @@ function add(event, data) {
                     + data.current_4 + "','"
                     + data.current_5 + "','"
                     + data.current_6 + "','"
-                    + data.power1 + "','"
-                    + data.power2 + "','"
-                    + data.power3 + "','"
-                    + data.power4 + "','"
-                    + data.power5 + "','"
-                    + data.power6 + "')";
+                    + data.power_1 + "','"
+                    + data.power_2 + "','"
+                    + data.power_3 + "','"
+                    + data.power_4 + "','"
+                    + data.power_5 + "','"
+                    + data.power_6 + "')";
                 db.query(sql_add, (err, rows, results) => {
                     if (err) throw err;
                     console.log(results);
