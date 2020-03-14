@@ -16,9 +16,16 @@ module.exports = {
       current_4: Sequelize.FLOAT(),
       current_5: Sequelize.FLOAT(),
       current_6: Sequelize.FLOAT(),
-      dateRecorded : {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      power_1: Sequelize.FLOAT(),
+      power_2: Sequelize.FLOAT(),
+      power_3: Sequelize.FLOAT(),
+      power_4: Sequelize.FLOAT(),
+      power_5: Sequelize.FLOAT(),
+      power_6: Sequelize.FLOAT(),
+      createdAt: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false
       }
     });
   },
