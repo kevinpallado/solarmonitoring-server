@@ -110,7 +110,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 1</p>
-                                <p><b>{this.props.power1}</b><b>A</b></p>
+                                <p><b>{this.props.power1}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
@@ -121,7 +121,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 2</p>
-                                <p><b>{this.props.power2}</b><b>A</b></p>
+                                <p><b>{this.props.power2}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
@@ -132,7 +132,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 3</p>
-                                <p><b>{this.props.power3}</b><b>A</b></p>
+                                <p><b>{this.props.power3}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
@@ -143,7 +143,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 4</p>
-                                <p><b>{this.props.power4}</b><b>A</b></p>
+                                <p><b>{this.props.power4}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
@@ -158,7 +158,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 5</p>
-                                <p><b>{this.props.power5}</b><b>A</b></p>
+                                <p><b>{this.props.power5}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
@@ -169,7 +169,7 @@ export default class Nodes extends Component {
                             </span>
                             <span className="d-inline-block">
                                 <p>Power Line 6</p>
-                                <p><b>{this.props.power6}</b><b>A</b></p>
+                                <p><b>{this.props.power6}</b><b>W</b></p>
                             </span>
                         </div>
                     </Col>
