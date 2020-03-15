@@ -54,13 +54,20 @@ s.on('connection', function (ws, req) {
             var current5 = data_read.C5;
             var current6 = data_read.C6;
 
-            var power1 = (current1 * voltage).toFixed(2);
-            var power2 = (current2 * voltage).toFixed(2);
-            var power3 = (current3 * voltage).toFixed(2);
-            var power4 = (current4 * voltage).toFixed(2);
-            var power5 = (current5 * voltage).toFixed(2);
-            var power6 = (current6 * voltage).toFixed(2);
+            var power1 = (current1 * voltage).toFixed(3);
+            var power2 = (current2 * voltage).toFixed(3);
+            var power3 = (current3 * voltage).toFixed(3);
+            var power4 = (current4 * voltage).toFixed(3);
+            var power5 = (current5 * voltage).toFixed(3);
+            var power6 = (current6 * voltage).toFixed(3);
 
+            data_read.Voltage = voltage.toFixed(3);
+            data_read.C1 = current1.toFixed(3);
+            data_read.C2 = current2.toFixed(3);
+            data_read.C3 = current3.toFixed(3);
+            data_read.C4 = current4.toFixed(3);
+            data_read.C5 = current5.toFixed(3);
+            data_read.C6 = current6.toFixed(3);
             data_read.power1 = power1;
             data_read.power2 = power2;
             data_read.power3 = power3;

@@ -445,6 +445,7 @@ class MainIndex extends Component {
             voltageLabel.unshift(date_now)
             temperatureLabel.unshift(date_now)
             currentLabel.unshift(date_now)
+            powerLabel.unshift(date_now)
 
             voltageDataCopy.unshift(this.state.voltage)
             tempDataCopy.unshift(this.state.temperature)
@@ -468,6 +469,7 @@ class MainIndex extends Component {
             voltageLabel.unshift(date_now)
             temperatureLabel.unshift(date_now)
             currentLabel.unshift(date_now)
+            powerLabel.unshift(date_now)
 
             voltageDataCopy.unshift(this.state.voltage)
             tempDataCopy.unshift(this.state.temperature)
