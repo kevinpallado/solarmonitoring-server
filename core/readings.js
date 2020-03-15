@@ -59,7 +59,7 @@ function view(event, data) {
                 });
                 break;
             case "all-temperature-data":
-                var sql_view = "SELECT id,temperatureC,createdAt FROM readings LIMIT 20"
+                var sql_view = "SELECT id,temperatureC,createdAt FROM readings ORDER BY createdAt DESC LIMIT 100";
                 db.query(sql_view, (err, rows, results) => {
                     if (rows.length > 0) {
                         for (var i = 0; i < rows.length; i++) {
@@ -75,7 +75,7 @@ function view(event, data) {
                 break;
             
             case "all-voltage-data":
-                var sql_view = "SELECT id,voltage,createdAt FROM readings LIMIT 20"
+                var sql_view = "SELECT id,voltage,createdAt FROM readings ORDER BY createdAt DESC LIMIT 100";
                 db.query(sql_view, (err, rows, results) => {
                     if (rows.length > 0) {
                         for (var i = 0; i < rows.length; i++) {
@@ -91,7 +91,7 @@ function view(event, data) {
                 break;
             
             case "all-current-data":
-                var sql_view = "SELECT id,current_1,current_2,current_3,current_4,current_5,current_6,createdAt FROM readings LIMIT 20"
+                var sql_view = "SELECT id,current_1,current_2,current_3,current_4,current_5,current_6,createdAt FROM readings ORDER BY createdAt DESC LIMIT 100";
                 db.query(sql_view, (err, rows, results) => {
                     if (rows.length > 0) {
                         for (var i = 0; i < rows.length; i++) {
@@ -111,7 +111,7 @@ function view(event, data) {
                     });
                 break;
             case "all-power-data":
-                var sql_view = "SELECT id,power_1,power_2,power_3,power_4,power_5,power_6,createdAt FROM readings LIMIT 20"
+                var sql_view = "SELECT id,power_1,power_2,power_3,power_4,power_5,power_6,createdAt FROM readings ORDER BY createdAt DESC LIMIT 100";
                 db.query(sql_view, (err, rows, results) => {
                     if (rows.length > 0) {
                         for (var i = 0; i < rows.length; i++) {
@@ -131,7 +131,7 @@ function view(event, data) {
                     });
                 break;
             case "between-dates-temperature":
-                var sql_test = "SELECT id,temperatureC,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt ASC LIMIT 20";
+                var sql_test = "SELECT id,temperatureC,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "' ORDER BY createdAt DESC LIMIT 100";
                 db.query(sql_test, (err, rows, results) => {
                     if (rows.length > 0) {
                         for (var i = 0; i < rows.length; i++) {
@@ -146,7 +146,7 @@ function view(event, data) {
                     });
                 break;
             case "between-dates-voltage":
-                var sql_test = "SELECT id,voltage,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt ASC LIMIT 20";
+                var sql_test = "SELECT id,voltage,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "' ORDER BY createdAt DESC LIMIT 100";
                 console.log(sql_test);
                 db.query(sql_test, (err, rows, results) => {
                     if (rows.length > 0) {
@@ -163,7 +163,7 @@ function view(event, data) {
                 break;
 
             case "between-dates-current":
-                    var sql_test = "SELECT id,current_1,current_2,current_3,current_4,current_5,current_6,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt ASC LIMIT 20";
+                    var sql_test = "SELECT id,current_1,current_2,current_3,current_4,current_5,current_6,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt DESC LIMIT 100";
                     console.log(sql_test);
                     db.query(sql_test, (err, rows, results) => {
                         if (rows.length > 0) {
@@ -184,7 +184,7 @@ function view(event, data) {
                         });
                     break;
             case "between-dates-power":
-                    var sql_view = "SELECT id,power_1,power_2,power_3,power_4,power_5,power_6,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt ASC LIMIT 20";
+                    var sql_view = "SELECT id,power_1,power_2,power_3,power_4,power_5,power_6,createdAt FROM readings WHERE createdAt BETWEEN '" + data.dateFrom + "' AND '" + data.dateTo + "'ORDER BY createdAt DESC LIMIT 100";
                     db.query(sql_view, (err, rows, results) => {
                         if (rows.length > 0) {
                             for (var i = 0; i < rows.length; i++) {
